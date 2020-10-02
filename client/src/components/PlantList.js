@@ -27,10 +27,14 @@ export default class PlantList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.filter !== this.state.filter && this.state.filter !== "all") {
+    if (prevState.filter !== this.state.filter) {
       const plants = this.state.plants;
-      const newList = plants.filter((item) => item.light === this.state.filter);
-      console.log(newList);
+      let newList;
+      if (this.state.filter !== "all") {
+        newList = plants.filter((item) => item.light === this.state.filter);
+      } else {
+        newList = plants;
+      }
       this.setState({ plantsToDisplay: newList });
     }
   }
