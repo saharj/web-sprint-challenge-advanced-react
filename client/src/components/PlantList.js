@@ -7,6 +7,8 @@ export default class PlantList extends Component {
     super();
     this.state = {
       plants: [],
+      plantsToDisplay: [],
+      filter: "all",
     };
   }
   // when the component mounts:
@@ -16,16 +18,49 @@ export default class PlantList extends Component {
     axios
       .get("http://localhost:3333/plants")
       .then((res) => {
-        this.setState({ plants: res.data.plantsData });
+        this.setState({
+          plants: res.data.plantsData,
+          plantsToDisplay: res.data.plantsData,
+        });
       })
       .catch((err) => console.log(err));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.filter !== this.state.filter && this.state.filter !== "all") {
+      const plants = this.state.plants;
+      const newList = plants.filter((item) => item.light === this.state.filter);
+      console.log(newList);
+      this.setState({ plantsToDisplay: newList });
+    }
+  }
+
+  handleChange = (event) => {
+    console.log(event.target.value);
+    this.setState({ filter: event.target.value });
+  };
+
   /*********  DON'T CHANGE ANYTHING IN THE RENDER FUNCTION *********/
   render() {
+    const filter = (
+      <form onSubmit={this.handleSubmit} style={{ display: "block" }}>
+        <label>
+          Choose the needed light:
+          <select value={this.state.value} onChange={this.handleChange}>
+            <option value="all">All</option>
+            <option value="direct">Direct</option>
+            <option value="indirect">Indirect</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+        {/* <input type="submit" value="Submit" /> */}
+      </form>
+    );
+
     return (
       <main className="plant-list">
-        {this.state?.plants?.map((plant) => (
+        {this.state?.plants && filter};
+        {this.state?.plantsToDisplay?.map((plant) => (
           <div className="plant-card" key={plant.id}>
             <img className="plant-image" src={plant.img} alt={plant.name} />
             <div className="plant-details">
