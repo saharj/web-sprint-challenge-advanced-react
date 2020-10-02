@@ -29,14 +29,26 @@ Commit your code regularly and meaningfully. This helps both you (in case you ev
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. Explain how to build stateful class components.
+   To do so, we need create our component like this: `class <component name> extends React.Component`
+   The next step is to render the component by wrapping our `return` data in a `render(){}`
+   As the component is stateful, we also need to define a `constructor(){}`, and call `super()` inside the constructor, so that we can have complete access to our `props`. Now we can define out state inside the constructor.
 
 2. Describe the different phases of the component lifecycle.
+   Mounting: Component is being built and added to the screen for the first time.
+   Updating: Component receives new data via props, or the state in the component gets updated. These changes usually result in a re-rendering of the component, but we can also control this behavior by calling the `shouldComponentUpdate()` method.
+   Un-mounting: Our job with the component is over and it will be removed from the screen. We can also cleanup all the data/changes caused by the component by using `componentWillUnmount()` method.
 
 3. Demonstrate an understanding of class component lifecycle methods.
+   Constructor: Received the props and sets up the initial state values;
+   Render: It involved mounting and updating, and gets called after either of these steps are ran.
+
+   - the steps explained above.
 
 4. Define stateful logic.
+   It is a logic that usually controls the state in the component. I can control events coming from the user, and update the state accordingly, or it can fetch/format the data before the component renders it.
 
 5. Describe how to test a React component with React Testing Library.
+   To test a component we need to first Arrange the test, which means to prepare or gather all the data that is needed for our test. Then we Act, which means that the test would give us a result to work with. And the the end we Assert the result we've received (or has been rendered), and we make sure that it is what our code expects it to be.
 
 You are expected to be able to answer questions in these areas. Your responses contribute to your Sprint Challenge grade.
 
